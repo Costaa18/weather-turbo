@@ -1,0 +1,50 @@
+services:
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
+    container_name: redis
+
+  gateway_service:
+    # Nome do serviço alterado para minúsculas
+    build:
+      context: "C:/Users/afons/Documents/IPCA/Computacao Distribuida/weather-turbo"
+      dockerfile: ./apps/ms-gateway/Dockerfile
+    ports:
+      - '3001:3000'
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=development
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/ms-gateway
+          target: /usr/src/app/ms-gateway
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    container_name: ms-gateway
+
+  weather_service:
+    # Nome do serviço alterado para minúsculas
+    build:
+      context: "C:/Users/afons/Documents/IPCA/Computacao Distribuida/weather-turbo"
+      dockerfile: ./apps/ms-weather/Dockerfile
+    env_file:
+      - ./apps/ms-weather/.env
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=development
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/ms-weather
+          target: /usr/src/app/ms-weather
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    container_name: ms-weather

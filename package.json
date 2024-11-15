@@ -19,5 +19,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@nestjs/microservices": "^10.4.7",
+    "ioredis": "^5.4.1"
+  }
 }

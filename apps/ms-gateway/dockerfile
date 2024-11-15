@@ -1,0 +1,28 @@
+# apps/ms-gateway/Dockerfile
+FROM node:20
+
+# Define o diretório de trabalho na raiz do Turborepo
+WORKDIR /usr/src/app
+
+# Copia o package.json e o package-lock.json do Turborepo para a raiz
+COPY package.json package-lock.json ./
+
+# Instala as dependências compartilhadas do Turborepo
+RUN npm install
+
+# Define o diretório de trabalho específico para a aplicação ms-gateway
+WORKDIR /usr/src/app/ms-gateway
+
+# Copia o package.json e o package-lock.json específicos do ms-gateway
+COPY apps/ms-gateway/package.json ./package.json
+
+# Instala as dependências específicas do ms-gateway
+RUN npm install
+
+# Copia o restante dos arquivos da aplicação ms-gateway
+COPY apps/ms-gateway/ .
+
+EXPOSE 3000
+
+# Define o comando para iniciar a aplicação
+CMD ["npm", "run", "dev"]
