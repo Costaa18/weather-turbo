@@ -8,7 +8,7 @@ services:
   gateway_service:
     # Nome do serviço alterado para minúsculas
     build:
-      context: "C:/Users/afons/Documents/IPCA/Computacao Distribuida/weather-turbo"
+      context: "."
       dockerfile: ./apps/ms-gateway/Dockerfile
     ports:
       - '3001:3000'
@@ -30,7 +30,7 @@ services:
   weather_service:
     # Nome do serviço alterado para minúsculas
     build:
-      context: "C:/Users/afons/Documents/IPCA/Computacao Distribuida/weather-turbo"
+      context: "."
       dockerfile: ./apps/ms-weather/Dockerfile
     env_file:
       - ./apps/ms-weather/.env
