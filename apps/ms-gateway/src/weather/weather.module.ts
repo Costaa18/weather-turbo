@@ -2,20 +2,10 @@
 import { Module } from '@nestjs/common';
 import { WeatherController } from './weather.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MicroservicesModule } from 'src/microservices/microservices.module';
 
 @Module({
-    imports: [
-        ClientsModule.register([
-            {
-                name: 'WEATHER_SERVICE',
-                transport: Transport.REDIS,
-                options: {
-                    host: 'redis',
-                    port: 6379,
-                },
-            },
-        ]),
-    ],
+    imports: [MicroservicesModule],
     controllers: [WeatherController],
 })
 
