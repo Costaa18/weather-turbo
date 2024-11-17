@@ -1,81 +1,167 @@
-# Turborepo starter
+# 🌦️ **Weather Microservices App**
 
-This is an official starter Turborepo.
+## 🚀 Overview
 
-## Using this example
+Este é um projeto de **microserviços** construído com **NestJS** e **Docker**, projetado para fornecer informações meteorológicas em tempo real. O sistema é composto por vários microserviços:
 
-Run the following command:
+- **Weather Service**: Fornece dados meteorológicos usando a API do OpenWeather.
+- **Geo Service**: Obtém a localização geográfica a partir do IP do utilizador.
+- **Database Service**: Armazena os dados meteorológicos em um banco de dados Supabase.
+- **Gateway**: Serve como ponto central para interagir com os outros microserviços.
 
-```sh
-npx create-turbo@latest
+Este projeto utiliza **Redis** como transportador para comunicação entre microserviços e **Docker** para facilitar a implantação.
+
+## 📦 Tecnologias Utilizadas
+
+- **NestJS** - Framework para construir APIs escaláveis e robustas.
+- **OpenWeather API** - Para obter dados climáticos.
+- **Supabase** - Banco de dados para armazenar os dados meteorológicos.
+- **Redis** - Comunicação entre os microserviços.
+- **Docker** - Containerização dos serviços.
+- **TypeScript** - Para desenvolvimento com tipagem forte.
+
+## 🛠️ Arquitetura
+
+A aplicação é composta por vários microserviços que se comunicam entre si através de mensagens via **Redis**. Cada microserviço tem uma responsabilidade bem definida, e o **Gateway** é responsável por orquestrar as requisições e interagir com os outros serviços.
+
+### Diagrama de Arquitetura:
+
+![Microservices Architecture](https://docs.nestjs.com/assets/Redis_1.png)
+
+1. **Gateway**: Recebe as requisições HTTP dos utilizadores e distribui para os microserviços correspondentes.
+2. **Weather Service**: Consulta a API externa (OpenWeather) para obter informações meteorológicas.
+3. **Geo Service**: Usa o IP do utilizador para determinar sua localização geográfica.
+4. **Database Service**: Armazena os dados climáticos no banco de dados Supabase.
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+
+Antes de começar, você precisa ter o seguinte instalado:
+
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Node.js](https://nodejs.org/) (recomendado versão 16 ou superior)
+
+### Clonar o repositório
+
+```bash
+git clone https://github.com/Costaa18/weather-turbo.git
+cd weather-microservices-app
 ```
 
-## What's inside?
+### Construir e rodar os containers com Docker
 
-This Turborepo includes the following packages/apps:
+1. Construir as imagens Docker:
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+``` 
+docker-compose build
 ```
 
-### Develop
+2. Iniciar os containers:
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+``` 
+docker-compose up
 ```
 
-### Remote Caching
+### Testar a Aplicação
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+**Obter o clima baseado no IP:**
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+``` 
+curl http://localhost:3001/weather
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+**Obter o clima por cidade:**
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+``` 
+curl http://localhost:3001/weather/city/Lisbon
 ```
 
-## Useful Links
+As respostas conterão os dados climáticos, como:
 
-Learn more about the power of Turborepo:
+- Temperatura
+- Sensação térmica
+- Humidade
+- Velocidade do vento
+- Descrição do clima
+- E muito mais!
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## 🔧 Configuração do Ambiente
+
+Para configurar variáveis de ambiente, você pode criar um arquivo **.env** na raiz do projeto. Um exemplo de arquivo **.env**:
+
+``` 
+OPEN_WEATHER_API_KEY=your-openweather-api-key
+SUPABASE_URL=your-supabase-url
+SUPABASE_KEY=your-supabase-key
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
+
+## 🔍 Estrutura do Projeto
+
+Aqui está a estrutura básica do projeto:
+
+```
+weather-microservices-app/
+├── apps/
+│   ├── ms-database/
+│   ├────src/
+│   ├────Dockerfile
+│   ├── ms-weather/
+│   ├────src/
+│   ├────Dockerfile
+│   ├── ms-geo/
+│   ├────src/
+│   ├────Dockerfile
+│   ├── ms-gateway/
+│   ├────src/
+│   ├────Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+## 📝 Exemplos de Uso
+
+### Exemplo 1: Obter clima pelo IP
+
+Faça uma requisição para o endpoint **/weather** para obter o clima atual para a localização do IP.
+
+```
+curl http://localhost:3001/weather
+```
+
+### Exemplo 2: Obter clima por cidade
+
+Para obter a previsão do tempo para uma cidade específica, faça uma requisição para o endpoint **/weather/city/{cidade}**.
+
+```
+curl http://localhost:3001/weather/city/Lisbon
+```
+
+#### Exemplo de Resposta
+
+```
+{
+  "temperature": 18.51,
+  "feelsLike": 18.22,
+  "tempMin": 16.75,
+  "tempMax": 18.51,
+  "pressure": 1019,
+  "humidity": 69,
+  "windSpeed": 1.35,
+  "windDeg": 49,
+  "weather": "Clouds",
+  "description": "broken clouds",
+  "city": "Lisbon",
+  "country": "PT",
+  "sunrise": 1731828326,
+  "sunset": 1731863584,
+  "icon": "04n"
+}
+```
+
+## 📜 Licença
+Este projeto está licenciado sob a [MIT License](https://opensource.org/license/mit).
+
+Feito por [Costtazzz](https://github.com/Costaa18).
