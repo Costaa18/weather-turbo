@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@nestjs/*": [
+                "node_modules/@nestjs/*"
+            ]
+        },
+        "outDir": "./dist",
+        "rootDir": "./",
+        "composite": true
+    },
+    "include": [
+        "**/*.ts"
+    ]
+}
