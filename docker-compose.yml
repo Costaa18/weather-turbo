@@ -6,7 +6,6 @@ services:
     container_name: redis
 
   gateway_service:
-    # Nome do serviço alterado para minúsculas
     build:
       context: "."
       dockerfile: ./apps/ms-gateway/Dockerfile
@@ -14,6 +13,9 @@ services:
       - '3001:3000'
     depends_on:
       - redis
+      - weather_service
+      - geo_service
+      - database_service
     environment:
       - NODE_ENV=development
     develop:
@@ -28,7 +30,6 @@ services:
     container_name: ms-gateway
 
   weather_service:
-    # Nome do serviço alterado para minúsculas
     build:
       context: "."
       dockerfile: ./apps/ms-weather/Dockerfile
@@ -36,6 +37,8 @@ services:
       - ./apps/ms-weather/.env
     depends_on:
       - redis
+      - database_service
+      - geo_service
     environment:
       - NODE_ENV=development
     develop:
@@ -48,3 +51,45 @@ services:
         - action: rebuild
           path: package.json
     container_name: ms-weather
+
+  geo_service:
+    build:
+      context: "."
+      dockerfile: ./apps/ms-geo/dockerfile
+    env_file:
+      - ./apps/ms-geo/.env
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=development
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/ms-geo
+          target: /usr/src/app/ms-geo
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    container_name: ms-geo
+
+  database_service:
+    build:
+      context: "."
+      dockerfile: ./apps/ms-database/dockerfile
+    env_file:
+      - ./apps/ms-database/.env
+    depends_on:
+      - redis
+    environment:
+      - NODE_ENV=development
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/ms-database
+          target: /usr/src/app/ms-database
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    container_name: ms-database
