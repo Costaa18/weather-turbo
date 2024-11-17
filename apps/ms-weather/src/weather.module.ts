@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
+import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
+  imports: [HttpModule, ConfigModule.forRoot()],
   controllers: [WeatherController],
   providers: [WeatherService],
 })
