@@ -6,7 +6,7 @@ Este é um projeto de **microserviços** construído com **NestJS** e **Docker**
 
 - **Weather Service**: Fornece dados meteorológicos usando a API do OpenWeather.
 - **Geo Service**: Obtém a localização geográfica a partir do IP do utilizador.
-- **Database Service**: Armazena os dados meteorológicos em um banco de dados Supabase.
+- **Database Service**: Armazena os dados meteorológicos em um base de dados Supabase.
 - **Gateway**: Serve como ponto central para interagir com os outros microserviços.
 
 Este projeto utiliza **Redis** como transportador para comunicação entre microserviços e **Docker** para facilitar a implantação.
@@ -15,7 +15,7 @@ Este projeto utiliza **Redis** como transportador para comunicação entre micro
 
 - **NestJS** - Framework para construir APIs escaláveis e robustas.
 - **OpenWeather API** - Para obter dados climáticos.
-- **Supabase** - Banco de dados para armazenar os dados meteorológicos.
+- **Supabase** - base de dados para armazenar os dados meteorológicos.
 - **Redis** - Comunicação entre os microserviços.
 - **Docker** - Containerização dos serviços.
 - **TypeScript** - Para desenvolvimento com tipagem forte.
@@ -31,7 +31,7 @@ A aplicação é composta por vários microserviços que se comunicam entre si a
 1. **Gateway**: Recebe as requisições HTTP dos utilizadores e distribui para os microserviços correspondentes.
 2. **Weather Service**: Consulta a API externa (OpenWeather) para obter informações meteorológicas.
 3. **Geo Service**: Usa o IP do utilizador para determinar sua localização geográfica.
-4. **Database Service**: Armazena os dados climáticos no banco de dados Supabase.
+4. **Database Service**: Armazena os dados climáticos no base de dados Supabase.
 
 ## 🚀 Como Executar o Projeto
 
@@ -84,11 +84,12 @@ As respostas conterão os dados climáticos, como:
 - Humidade
 - Velocidade do vento
 - Descrição do clima
-- E muito mais!
+- Icone consoante o clima
 
 ## 🔧 Configuração do Ambiente
 
-Para configurar variáveis de ambiente, você pode criar um arquivo **.env** na raiz do projeto. Um exemplo de arquivo **.env**:
+Para configurar variáveis de ambiente, você pode criar um arquivo **.env** na raiz do projeto. 
+Um exemplo de arquivo **.env**:
 
 ``` 
 OPEN_WEATHER_API_KEY=your-openweather-api-key
