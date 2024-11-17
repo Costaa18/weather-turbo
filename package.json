@@ -22,14 +22,17 @@
   ],
   "dependencies": {
     "@nestjs/axios": "^3.1.2",
+    "@nestjs/common": "^10.4.8",
     "@nestjs/config": "^3.3.0",
     "@nestjs/microservices": "^10.4.7",
+    "@nestjs/swagger": "^8.0.7",
     "@supabase/supabase-js": "^2.46.1",
     "axios": "^1.7.7",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "ioredis": "^5.4.1",
-    "request-ip": "^3.3.0"
+    "request-ip": "^3.3.0",
+    "swagger-ui-express": "^5.0.1"
   }
 }
