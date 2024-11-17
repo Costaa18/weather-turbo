@@ -21,8 +21,8 @@ async function bootstrap() {
         transform: true, // Transforma dados para os tipos definidos nos DTOs
       }),
     );
-
     const port = process.env.GATEWAY_PORT || 3000;
+
     await app.listen(port);
 
     logger.log(`Gateway is running on http://localhost:${port}`);
