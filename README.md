@@ -4,8 +4,8 @@
 
 Este é um projeto de **microserviços** construído com **NestJS** e **Docker**, projetado para fornecer informações meteorológicas em tempo real. O sistema é composto por vários microserviços:
 
-- **Weather Service**: Fornece dados meteorológicos usando a API do OpenWeather.
-- **Geo Service**: Obtém a localização geográfica a partir do IP do utilizador.
+- **Weather Service**: Fornece dados meteorológicos usando a API do [OpenWeather](https://openweathermap.org/).
+- **Geo Service**: Obtém a localização geográfica usando a API [IP Geolocation API](https://ip-api.com/) a partir do IP do utilizador.
 - **Database Service**: Armazena os dados meteorológicos em um base de dados Supabase.
 - **Gateway**: Serve como ponto central para interagir com os outros microserviços.
 
