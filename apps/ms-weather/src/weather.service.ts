@@ -38,6 +38,68 @@ export class WeatherService {
   }
 
   /**
+   * Obtém dados do tempo para os próximos 4 dias com base na cidade fornecida.
+   */
+  async getWeatherForecastByCity(weatherByCityDto: WeatherByCityDto): Promise<WeatherData[]> {
+    const url = this.buildWeatherForecastApiUrl(weatherByCityDto.city);
+    return this.fetchWeatherForecastData(url);
+  }
+
+  /**
+   * Constrói a URL para acessar a API de previsão do tempo.
+   */
+  private buildWeatherForecastApiUrl(city: string, country?: string): string {
+    const apiKey = process.env.OPEN_WEATHER_API_KEY;
+    if (!apiKey) {
+      throw new Error('API Key for OpenWeather is not configured.');
+    }
+    const query = country ? `${city},${country}` : city;
+    return `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric`;
+  }
+
+  /**
+   * Busca e processa os dados da API de previsão do tempo.
+   */
+  private async fetchWeatherForecastData(url: string): Promise<WeatherData[]> {
+    try {
+      const response = await firstValueFrom(this.httpService.get(url));
+      return this.mapWeatherForecastData(response.data);
+    } catch (error) {
+      this.logger.error(`Failed to fetch weather forecast data from URL: ${url}`, error.stack);
+      throw new BadRequestException('Unable to fetch weather forecast data. Please try again later.');
+    }
+  }
+
+  /**
+   * Mapeia a resposta da API de previsão do tempo para o tipo WeatherData.
+   */
+  private mapWeatherForecastData(data: any): WeatherData[] {
+    if (!data.list || !Array.isArray(data.list) || data.list.length === 0) {
+      throw new BadRequestException('Incomplete weather forecast data received from the API.');
+    }
+    return data.list
+      .filter((item: any, index: number) => index % 8 === 0) // Filtra para obter dados a cada 24 horas (8 * 3 horas)
+      .map((item: any) => ({
+        temperature: item.main.temp,
+        feelsLike: item.main.feels_like,
+        tempMin: item.main.temp_min,
+        tempMax: item.main.temp_max,
+        pressure: item.main.pressure,
+        humidity: item.main.humidity,
+        windSpeed: item.wind?.speed ?? 0,
+        windDeg: item.wind?.deg ?? 0,
+        weather: item.weather[0]?.main,
+        description: item.weather[0]?.description,
+        city: data.city.name,
+        country: data.city.country,
+        sunrise: data.city.sunrise,
+        sunset: data.city.sunset,
+        icon: item.weather[0]?.icon,
+        current_time: item.dt,
+        visibility: item.visibility,
+      }));
+  }
+  /**
    * Busca e processa os dados da API do tempo.
    */
   private async fetchWeatherData(url: string): Promise<WeatherData> {
@@ -63,7 +125,6 @@ export class WeatherService {
     ) {
       throw new BadRequestException('Incomplete weather data received from the API.');
     }
-
     return {
       temperature: data.main.temp,
       feelsLike: data.main.feels_like,
@@ -80,6 +141,9 @@ export class WeatherService {
       sunrise: data.sys.sunrise,
       sunset: data.sys.sunset,
       icon: data.weather[0]?.icon,
+      current_time: data.dt,
+      visibility: data.visibility,
     };
+
   }
 }
