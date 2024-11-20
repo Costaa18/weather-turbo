@@ -61,4 +61,9 @@ export class WeatherController {
 
         return weatherData;
     }
+
+    @Get("forecast/:city")
+    async getWeatherForecastByCity(@Param() weatherByCityDto: WeatherByCityDto): Promise<WeatherData[]> {
+        return this.weatherService.send<WeatherData[]>('get_weather_forecast_by_city', weatherByCityDto).toPromise();
+    }
 }
