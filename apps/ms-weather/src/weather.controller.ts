@@ -38,4 +38,19 @@ export class WeatherController {
       throw error; // Repropaga o erro para que o emissor saiba do problema.
     }
   }
+
+  /**
+   * Obtém os dados da previsão do clima com base no nome da cidade recebida via evento.
+   * Evento: `get_weather_forecast_by_city`
+   */
+  @EventPattern('get_weather_forecast_by_city')
+  async getWeatherForecastByCity(@Payload() weatherByCityDto: WeatherByCityDto): Promise<WeatherData[]> {
+    this.logger.log('Handling event: get_weather_forecast_by_city');
+    try {
+      return this.weatherService.getWeatherForecastByCity(weatherByCityDto);
+    } catch (error) {
+      this.logger.error('Error handling get_weather_forecast_by_city event', error.stack);
+      throw error; // Repropaga o erro para que o emissor saiba do problema.
+    }
+  }
 }
