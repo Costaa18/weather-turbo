@@ -58,6 +58,8 @@ interface WeatherData {
     sunrise: number;
     sunset: number;
     icon: string;
+    current_time: number;
+    visibility: number;
 }
 
 interface Location {
