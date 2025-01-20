@@ -9,14 +9,13 @@ export class SupabaseService {
         process.env.SUPABASE_KEY
     );
 
-    async saveWeatherData(ip: string, weatherData: WeatherData, city?: string, userId?: number): Promise<void> {
+    async saveWeatherData(ip: string, weatherData: WeatherData, city?: string): Promise<void> {
         try {
             const { error } = await this.client.from('logs').insert([
                 {
                     ip: ip,
                     city_searched: city || "Unknown", // Default 'Unknown' if city is undefined
                     weather_data: weatherData,
-                    user_id: userId,
                 },
             ]);
 

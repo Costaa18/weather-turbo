@@ -9,11 +9,10 @@ export class DatabaseController {
   constructor(private readonly databaseService: DatabaseService) { }
 
   @EventPattern('save_weather')
-  async saveWeatherData(payload: { ip: string, weatherData: WeatherData, city?: string, userEmail?: string }): Promise<void> {
-    const { ip, weatherData, city, userEmail } = payload;
+  async saveWeatherData(payload: { ip: string, weatherData: WeatherData, city?: string }): Promise<void> {
+    const { ip, weatherData, city } = payload;
     try {
-      this.logger.log(`Saving weather data for Email: ${userEmail}`);
-      await this.databaseService.saveWeatherData(ip, weatherData, city, userEmail);
+      await this.databaseService.saveWeatherData(ip, weatherData, city);
     } catch (error) {
       this.logger.error('Error while saving weather data in the database', error.stack);
       throw new Error('Error while saving weather data in the database');

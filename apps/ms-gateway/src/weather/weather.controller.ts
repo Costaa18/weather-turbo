@@ -3,7 +3,6 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Request } from "express";
 import { WeatherByCityDto } from "./dtos/WeatherByCity.dto";
 import * as requestIp from 'request-ip';
-import { UserAuthDto } from "./dtos/UserAuth.dto";
 
 @Controller('weather')
 export class WeatherController {
@@ -21,11 +20,9 @@ export class WeatherController {
         return this.weatherService.send<WeatherData>('get_weather', weatherByCityDto).toPromise();
     }
 
-    private async saveWeatherData(ip: string, weatherData: WeatherData, city?: string, userEmail? : string): Promise<void> {
+    private async saveWeatherData(ip: string, weatherData: WeatherData, city?: string): Promise<void> {
         // Structure the payload correctly, ensuring weatherData is passed correctly
-        const payload = { ip, weatherData, city, userEmail };
-
-        Logger.log("Email no save WeatherData: " + userEmail);
+        const payload = { ip, weatherData, city };
 
         await this.databaseService.send('save_weather', payload).toPromise();
     }
@@ -55,13 +52,12 @@ export class WeatherController {
     }
 
     @Get("city/:city")
-    async getWeatherByCity(@Param() weatherByCityDto: WeatherByCityDto, @Param() userAuth: UserAuthDto, @Req() request: Request): Promise<WeatherData> {
+    async getWeatherByCity(@Param() weatherByCityDto: WeatherByCityDto, @Req() request: Request): Promise<WeatherData> {
         //const ip = requestIp.getClientIp(request) 
         const ip = '82.155.117.114';
-        Logger.log(`Email no weather: ${userAuth.email}`);
         const weatherData = await this.getWeatherDataByGeo({ city: weatherByCityDto.city });
 
-        await this.saveWeatherData(ip, weatherData, weatherByCityDto.city, userAuth.email);
+        await this.saveWeatherData(ip, weatherData, weatherByCityDto.city);
 
         return weatherData;
     }
