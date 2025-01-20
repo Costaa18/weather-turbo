@@ -1,8 +1,9 @@
-import { BadGatewayException, BadRequestException, Controller, Get, Inject, Param, Req } from "@nestjs/common";
+import { BadGatewayException, BadRequestException, Body, Controller, Get, Inject, Logger, Param, Post, Req } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { Request } from "express";
 import { WeatherByCityDto } from "./dtos/WeatherByCity.dto";
 import * as requestIp from 'request-ip';
+import { UserAuthDto } from "./dtos/UserAuth.dto";
 
 @Controller('weather')
 export class WeatherController {
@@ -20,9 +21,12 @@ export class WeatherController {
         return this.weatherService.send<WeatherData>('get_weather', weatherByCityDto).toPromise();
     }
 
-    private async saveWeatherData(ip: string, weatherData: WeatherData, city?: string): Promise<void> {
+    private async saveWeatherData(ip: string, weatherData: WeatherData, city?: string, userEmail? : string): Promise<void> {
         // Structure the payload correctly, ensuring weatherData is passed correctly
-        const payload = { ip, weatherData, city };
+        const payload = { ip, weatherData, city, userEmail };
+
+        Logger.log("Email no save WeatherData: " + userEmail);
+
         await this.databaseService.send('save_weather', payload).toPromise();
     }
 
@@ -51,13 +55,13 @@ export class WeatherController {
     }
 
     @Get("city/:city")
-    async getWeatherByCity(@Param() weatherByCityDto: WeatherByCityDto, @Req() request: Request): Promise<WeatherData> {
+    async getWeatherByCity(@Param() weatherByCityDto: WeatherByCityDto, @Param() userAuth: UserAuthDto, @Req() request: Request): Promise<WeatherData> {
         //const ip = requestIp.getClientIp(request) 
         const ip = '82.155.117.114';
-
+        Logger.log(`Email no weather: ${userAuth.email}`);
         const weatherData = await this.getWeatherDataByGeo({ city: weatherByCityDto.city });
 
-        await this.saveWeatherData(ip, weatherData, weatherByCityDto.city);
+        await this.saveWeatherData(ip, weatherData, weatherByCityDto.city, userAuth.email);
 
         return weatherData;
     }
@@ -66,4 +70,5 @@ export class WeatherController {
     async getWeatherForecastByCity(@Param() weatherByCityDto: WeatherByCityDto): Promise<WeatherData[]> {
         return this.weatherService.send<WeatherData[]>('get_weather_forecast_by_city', weatherByCityDto).toPromise();
     }
+
 }

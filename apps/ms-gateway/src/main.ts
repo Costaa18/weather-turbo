@@ -11,16 +11,26 @@ async function bootstrap() {
   try {
     const app = await NestFactory.create(GatewayModule);
 
-    app.enableCors();
+    app.useGlobalPipes(new ValidationPipe(
+      {
+        whitelist: true,
+        transform: true,
+        forbidNonWhitelisted: true,
+        transformOptions: {
+          enableImplicitConversion: true,
+        },
+      }
+    ));
+    
+    app.enableCors({
+      origin: 'http://localhost:3008',
+      credentials: true,
+    })
 
     // Configuração global de validação
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true, // Remove propriedades não especificadas nos DTOs
-        forbidNonWhitelisted: true, // Rejeita propriedades não declaradas no DTO
-        transform: true, // Transforma dados para os tipos definidos nos DTOs
-      }),
-    );
+
+
+
     const port = process.env.GATEWAY_PORT || 3000;
 
     await app.listen(port);

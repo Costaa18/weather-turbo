@@ -85,3 +85,7 @@ interface GeoData {
     city: string;
     country: string;
 }
+
+interface UserData {
+        email: string;
+}
