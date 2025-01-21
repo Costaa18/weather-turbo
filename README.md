@@ -164,5 +164,3 @@ curl http://localhost:3001/weather/city/Lisbon
 
 ## 📜 Licença
 Este projeto está licenciado sob a [MIT License](https://opensource.org/license/mit).
-
-Feito por [Costtazzz](https://github.com/Costaa18).
