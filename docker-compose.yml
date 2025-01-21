@@ -18,15 +18,15 @@ services:
       - database_service
     environment:
       - NODE_ENV=development
-    develop:
-      watch:
-        - action: sync
-          path: ./apps/ms-gateway
-          target: /usr/src/app/ms-gateway
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: package.json
+    #develop:
+    #  watch:
+    #    - action: sync
+    #      path: ./apps/ms-gateway
+    #      target: /usr/src/app/ms-gateway
+    #      ignore:
+    #        - node_modules/
+    #    - action: rebuild
+    #      path: package.json
     container_name: ms-gateway
 
   weather_service:
@@ -41,15 +41,15 @@ services:
       - geo_service
     environment:
       - NODE_ENV=development
-    develop:
-      watch:
-        - action: sync
-          path: ./apps/ms-weather
-          target: /usr/src/app/ms-weather
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: package.json
+    #develop:
+    #  watch:
+    #    - action: sync
+    #      path: ./apps/ms-weather
+    #      target: /usr/src/app/ms-weather
+    #      ignore:
+    #        - node_modules/
+    #    - action: rebuild
+    #      path: package.json
     container_name: ms-weather
 
   geo_service:
@@ -62,15 +62,15 @@ services:
       - redis
     environment:
       - NODE_ENV=development
-    develop:
-      watch:
-        - action: sync
-          path: ./apps/ms-geo
-          target: /usr/src/app/ms-geo
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: package.json
+    #develop:
+    #  watch:
+    #    - action: sync
+    #      path: ./apps/ms-geo
+    #     target: /usr/src/app/ms-geo
+    #      ignore:
+    #        - node_modules/
+    #    - action: rebuild
+    #      path: package.json
     container_name: ms-geo
 
   database_service:
@@ -83,13 +83,13 @@ services:
       - redis
     environment:
       - NODE_ENV=development
-    develop:
-      watch:
-        - action: sync
-          path: ./apps/ms-database
-          target: /usr/src/app/ms-database
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: package.json
+    #develop:
+    #  watch:
+    #    - action: sync
+    #      path: ./apps/ms-database
+    #      target: /usr/src/app/ms-database
+    #      ignore:
+    #        - node_modules/
+    #    - action: rebuild
+    #      path: package.json
     container_name: ms-database
