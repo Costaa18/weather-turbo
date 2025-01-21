@@ -8,7 +8,7 @@ services:
   gateway_service:
     build:
       context: "."
-      dockerfile: ./apps/ms-gateway/Dockerfile
+      dockerfile: ./apps/ms-gateway/dockerfile
     ports:
       - '3001:3000'
     depends_on:
@@ -32,7 +32,7 @@ services:
   weather_service:
     build:
       context: "."
-      dockerfile: ./apps/ms-weather/Dockerfile
+      dockerfile: ./apps/ms-weather/dockerfile
     env_file:
       - ./apps/ms-weather/.env
     depends_on:
