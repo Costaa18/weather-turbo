@@ -30,8 +30,8 @@ export class WeatherController {
     @Get()
     async getWeatherByIP(@Req() request: Request): Promise<WeatherData> {
         try {
-            //const ip = requestIp.getClientIp(request) || '82.155.117.114'; // Fallback IP
-            const ip = '82.155.117.114';
+            const ip = requestIp.getClientIp(request) || '82.155.117.114'; // Fallback IP
+            //const ip = '82.155.117.114';
             console.log('IP:', ip);
 
             const geoData = await this.getGeoDataByIP(ip);
