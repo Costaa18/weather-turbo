@@ -1,0 +1,13 @@
+# Ignorar dependências locais e arquivos de cache
+node_modules
+npm-debug.log
+yarn-error.log
+.cache
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de configuração locais
+.idea
+.vscode

@@ -1,5 +1,5 @@
 # apps/ms-geo/Dockerfile
-FROM node:20
+FROM node:20-alpine
 
 # Define o diretório de trabalho na raiz do Turborepo
 WORKDIR /usr/src/app
