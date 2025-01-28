@@ -1,26 +1,17 @@
-# apps/ms-database/Dockerfile
 FROM node:20-alpine
 
-# Define o diretório de trabalho na raiz do Turborepo
 WORKDIR /usr/src/app
 
-# Copia o package.json e o package-lock.json do Turborepo para a raiz
 COPY package.json package-lock.json ./
 
-# Instala as dependências compartilhadas do Turborepo
 RUN npm install
 
-# Define o diretório de trabalho específico para a aplicação ms-database
 WORKDIR /usr/src/app/ms-database
 
-# Copia o package.json e o package-lock.json específicos do ms-database
 COPY apps/ms-database/package.json ./package.json
 
-# Instala as dependências específicas do ms-database
 RUN npm install
 
-# Copia o restante dos arquivos da aplicação ms-database
 COPY apps/ms-database/ .
 
-# Define o comando para iniciar a aplicação
 CMD ["npm", "run", "dev"]
