@@ -88,16 +88,34 @@ As respostas conterão os dados climáticos, como:
 
 ## 🔧 Configuração do Ambiente
 
-Para configurar variáveis de ambiente, você pode criar um arquivo **.env** na raiz do projeto. 
-Um exemplo de arquivo **.env**:
+Para configurar variáveis de ambiente. 
+Gateway: 
+```
+GATEWAY_PORT="3000"
+```
 
+Weather:
 ``` 
 OPEN_WEATHER_API_KEY=your-openweather-api-key
-SUPABASE_URL=your-supabase-url
-SUPABASE_KEY=your-supabase-key
-REDIS_HOST=redis
+REDIS_HOST="redis"
 REDIS_PORT=6379
 ```
+
+Geo:
+``` 
+REDIS_HOST="redis"
+REDIS_PORT=6379
+```
+
+Database
+```
+supabaseUrl="https://yimeupeqkkkoiwrujaep.supabase.co/"
+SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpbWV1cGVxa2trb2l3cnVqYWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1MTE2MTQsImV4cCI6MjA0NzA4NzYxNH0.gUuEbd-iftP42WIzWZy0KYzpL6l8_ICG-6DPXsV8pWI"
+
+REDIS_HOST="redis"
+REDIS_PORT=6379
+```
+
 
 ## 🔍 Estrutura do Projeto
 
