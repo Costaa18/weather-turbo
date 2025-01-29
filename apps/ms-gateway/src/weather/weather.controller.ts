@@ -30,9 +30,7 @@ export class WeatherController {
     @Get()
     async getWeatherByIP(@Req() request: Request): Promise<WeatherData> {
         try {
-            const ip = requestIp.getClientIp(request) || '82.155.117.114'; // Fallback IP
-            //const ip = '82.155.117.114';
-            console.log('IP:', ip);
+            const ip = requestIp.getClientIp(request);
 
             const geoData = await this.getGeoDataByIP(ip);
 
@@ -53,8 +51,7 @@ export class WeatherController {
 
     @Get("city/:city")
     async getWeatherByCity(@Param() weatherByCityDto: WeatherByCityDto, @Req() request: Request): Promise<WeatherData> {
-        //const ip = requestIp.getClientIp(request) 
-        const ip = '82.155.117.114';
+        const ip = requestIp.getClientIp(request);
         const weatherData = await this.getWeatherDataByGeo({ city: weatherByCityDto.city });
 
         await this.saveWeatherData(ip, weatherData, weatherByCityDto.city);
