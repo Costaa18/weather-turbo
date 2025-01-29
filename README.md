@@ -109,8 +109,8 @@ REDIS_PORT=6379
 
 Database
 ```
-supabaseUrl="https://yimeupeqkkkoiwrujaep.supabase.co/"
-SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpbWV1cGVxa2trb2l3cnVqYWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1MTE2MTQsImV4cCI6MjA0NzA4NzYxNH0.gUuEbd-iftP42WIzWZy0KYzpL6l8_ICG-6DPXsV8pWI"
+supabaseUrl="your-openweather-supabase-url"
+SUPABASE_KEY="your-openweather-supabase-key"
 
 REDIS_HOST="redis"
 REDIS_PORT=6379
