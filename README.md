@@ -2,93 +2,99 @@
 
 ## 🚀 Overview
 
-Este é um projeto de **microserviços** construído com **NestJS** e **Docker**, projetado para fornecer informações meteorológicas em tempo real. O sistema é composto por vários microserviços:
+This is a **microservices project** built with **NestJS** and **Docker**, designed to provide real-time weather information. The system is composed of several microservices:
 
-- **Weather Service**: Fornece dados meteorológicos usando a API do [OpenWeather](https://openweathermap.org/).
-- **Geo Service**: Obtém a localização geográfica usando a API [IP Geolocation API](https://ip-api.com/) a partir do IP do utilizador.
-- **Database Service**: Armazena os dados meteorológicos em um base de dados Supabase.
-- **Gateway**: Serve como ponto central para interagir com os outros microserviços.
+- **Weather Service**: Fetches weather data using the [OpenWeather API](https://openweathermap.org/).
+- **Geo Service**: Retrieves user geolocation from their IP using the [IP Geolocation API](https://ip-api.com/).
+- **Database Service**: Stores weather data in a Supabase database.
+- **Gateway**: Acts as the central entry point for interacting with other microservices.
 
-Este projeto utiliza **Redis** como transportador para comunicação entre microserviços e **Docker** para facilitar a implantação.
+The project uses **Redis** as a message broker for communication between microservices and **Docker** for deployment.
 
-## 📦 Tecnologias Utilizadas
+---
 
-- **NestJS** - Framework para construir APIs escaláveis e robustas.
-- **OpenWeather API** - Para obter dados climáticos.
-- **Supabase** - base de dados para armazenar os dados meteorológicos.
-- **Redis** - Comunicação entre os microserviços.
-- **Docker** - Containerização dos serviços.
-- **TypeScript** - Para desenvolvimento com tipagem forte.
+## 📦 Technologies Used
 
-## 🛠️ Arquitetura
+- **NestJS** – Framework for building scalable and robust APIs.  
+- **OpenWeather API** – For fetching weather data.  
+- **Supabase** – Database for storing weather data.  
+- **Redis** – For inter-service communication.  
+- **Docker** – Containerization of services.  
+- **TypeScript** – For strongly typed development.  
 
-A aplicação é composta por vários microserviços que se comunicam entre si através de mensagens via **Redis**. Cada microserviço tem uma responsabilidade bem definida, e o **Gateway** é responsável por orquestrar as requisições e interagir com os outros serviços.
+---
 
-### Diagrama de Arquitetura:
+## 🛠️ Architecture
+
+The application consists of multiple microservices that communicate with each other via **Redis** messages. Each microservice has a well-defined responsibility, while the **Gateway** orchestrates requests and coordinates with other services.
+
+### Architecture Diagram:
 
 ![Microservices Architecture](https://docs.nestjs.com/assets/Redis_1.png)
 
-1. **Gateway**: Recebe as requisições HTTP dos utilizadores e distribui para os microserviços correspondentes.
-2. **Weather Service**: Consulta a API externa (OpenWeather) para obter informações meteorológicas.
-3. **Geo Service**: Usa o IP do utilizador para determinar sua localização geográfica.
-4. **Database Service**: Armazena os dados climáticos no base de dados Supabase.
+1. **Gateway**: Receives HTTP requests from users and routes them to the appropriate microservices.  
+2. **Weather Service**: Queries the external OpenWeather API for weather information.  
+3. **Geo Service**: Determines the user’s geographic location based on their IP.  
+4. **Database Service**: Stores weather data in the Supabase database.  
 
-## 🚀 Como Executar o Projeto
+---
 
-### Pré-requisitos
+## 🚀 Running the Project
 
-Antes de começar, você precisa ter o seguinte instalado:
+### Prerequisites
 
-- [Docker](https://www.docker.com/products/docker-desktop)
-- [Node.js](https://nodejs.org/) (recomendado versão 16 ou superior)
+You need to have the following installed:
 
-### Clonar o repositório
+- [Docker](https://www.docker.com/products/docker-desktop)  
+- [Node.js](https://nodejs.org/) (version 16 or higher recommended)  
+
+### Clone the Repository
 
 ```bash
 git clone https://github.com/Costaa18/weather-turbo.git
 cd weather-microservices-app
 ```
 
-### Construir e rodar os containers com Docker
+### Build and Run the Docker Containers
 
-1. Construir as imagens Docker:
+1. Build the Docker images:
 
 ``` 
 docker-compose build
 ```
 
-2. Iniciar os containers:
+2. Start the containers:
 
 ``` 
 docker-compose up
 ```
 
-### Testar a Aplicação
+### Test the Application
 
-**Obter o clima baseado no IP:**
+**Get weather by IP:**
 
 ``` 
 curl http://localhost:3001/weather
 ```
 
-**Obter o clima por cidade:**
+**Get weather by city:**
 
 ``` 
 curl http://localhost:3001/weather/city/Lisbon
 ```
 
-As respostas conterão os dados climáticos, como:
+Responses include weather details such as:
 
-- Temperatura
-- Sensação térmica
-- Humidade
-- Velocidade do vento
-- Descrição do clima
-- Icone consoante o clima
+- Temperature
+- Feels like
+- Humidity
+- Wind speed
+- Weather description
+- Corresponding weather icon
 
-## 🔧 Configuração do Ambiente
+## 🔧 Environment Configuration
 
-Para configurar variáveis de ambiente. 
+Set the environment variables as follows:
 Gateway: 
 ```
 GATEWAY_PORT="3000"
@@ -117,9 +123,9 @@ REDIS_PORT=6379
 ```
 
 
-## 🔍 Estrutura do Projeto
+## 🔍 Project Structure
 
-Aqui está a estrutura básica do projeto:
+Here’s the basic structure of the project:
 
 ```
 weather-microservices-app/
@@ -140,25 +146,25 @@ weather-microservices-app/
 └── README.md
 ```
 
-## 📝 Exemplos de Uso
+## 📝 Usage Examples
 
-### Exemplo 1: Obter clima pelo IP
+### Example 1: Get Weather by IP
 
-Faça uma requisição para o endpoint **/weather** para obter o clima atual para a localização do IP.
+Request the **/weather** endpoint to get the current weather for the IP location:
 
 ```
 curl http://localhost:3001/weather
 ```
 
-### Exemplo 2: Obter clima por cidade
+### Example 2: Get Weather by City
 
-Para obter a previsão do tempo para uma cidade específica, faça uma requisição para o endpoint **/weather/city/{cidade}**.
+Request the **/weather/city/{cidade}** endpoint to get weather for a specific city:
 
 ```
 curl http://localhost:3001/weather/city/Lisbon
 ```
 
-#### Exemplo de Resposta
+#### Example Response
 
 ```
 {
@@ -180,5 +186,5 @@ curl http://localhost:3001/weather/city/Lisbon
 }
 ```
 
-## 📜 Licença
-Este projeto está licenciado sob a [MIT License](https://opensource.org/license/mit).
+## 📜 License
+This project is licensed under the [MIT License](https://opensource.org/license/mit).
